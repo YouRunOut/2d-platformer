@@ -1,73 +1,58 @@
-extends CharacterBody2D
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
+extends Entity
+
 @onready var hp_label: Label = $Camera2D/HPLabel
 
-
-const SPEED = 150.0 
-const JUMP_VELOCITY = -250.0
-
-
-var hp: int:
-	set(value):
-		hp = max(value, 0)
-		hp_label.text = "HP: %s" % hp
-		if hp == 0: kill()
-var dead: bool = false
-var hit: bool = false
+const SPEED := 150.0
+const JUMP_VELOCITY := -250.0
+const FALL_KILL_Y := 120
 
 func _ready() -> void:
-	hp = 3
+	hp_changed.connect(func(v): update_hp_ui(v))
+	super()
+	
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	apply_gravity(delta)
+
+	if state in [State.IDLE, State.RUN, State.JUMP]:
+		handle_input()
+
+	move_and_slide()
+	check_fall_death()
+
+func handle_input() -> void:
+	var direction := Input.get_axis("ui_left", "ui_right")
+
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+		set_state(State.JUMP)
+		return
+
+	if direction != 0:
+		velocity.x = direction * SPEED
+		if is_on_floor():
+			set_state(State.RUN)
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		if is_on_floor():
+			set_state(State.IDLE)
+
 	if not is_on_floor():
-			velocity += get_gravity() * delta
-			if position.y >= 1000:
-				received_damage(position.y)
-	
-	if not dead and not hit:
-		# Handle jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-			set_animation("jump")
+		set_state(State.JUMP)
 
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis("ui_left", "ui_right")
-		if direction:
-			velocity.x = direction * SPEED
-			if velocity.y == 0: set_animation("run")
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			if velocity.y == 0: set_animation("idle")
-		
-		
-		move_and_slide()
-
-
-func set_animation(type: String) -> void:
-	if animated_sprite.animation != type:
-		animated_sprite.play(type)
-
-
-func received_damage(damage: int) -> void:
-	if dead: return
-	hit = true
-	set_animation("hit")
-	hp -= damage
-
-func kill() -> void:
-	dead = true
-	hp_label.text = "GAME OVER"
-	set_animation("death")
+func update_hp_ui(value: int) -> void:
+	hp_label.text = "HP: %s" % value
 
 
 
+
+func check_fall_death() -> void:
+	if position.y >= FALL_KILL_Y:
+		hp = 0
 
 func _on_animation_finished() -> void:
-	match animated_sprite.animation:
-		"hit": hit = false
-		"death":
-			await get_tree().create_timer(2).timeout
-			get_tree().change_scene_to_file("res://src/Scenes/level_1.tscn")
+	if state == State.DEAD:
+		await get_tree().create_timer(0.3).timeout
+		get_tree().reload_current_scene()
+	else:
+		super()

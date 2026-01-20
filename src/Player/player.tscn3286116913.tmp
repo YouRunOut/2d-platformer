@@ -278,7 +278,7 @@ script = ExtResource("1_fdvkn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(0.03227492, 0.029339625)
-zoom = Vector2(4.5, 4.5)
+zoom = Vector2(5, 5)
 
 [node name="HPLabel" type="Label" parent="Camera2D"]
 offset_left = -712.62756
@@ -286,6 +286,7 @@ offset_top = -647.5884
 offset_right = -598.87976
 offset_bottom = -624.5884
 scale = Vector2(12.529958, 12.529958)
+text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
