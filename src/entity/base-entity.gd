@@ -70,6 +70,13 @@ func receive_damage(damage: int, knockback := 0.0, from_dir := 0) -> void:
 		set_state(State.HIT)
 	#hp_changed.emit(hp)
 
+func update_facing_direction(dir) -> void:
+	var should_flip: bool = dir < 0
+	if animated_sprite.flip_h != should_flip:
+		animated_sprite.flip_h = should_flip
+	else: return
+	
+
 
 func _on_animation_finished() -> void:
 	if state == State.HIT:

@@ -30,6 +30,7 @@ func handle_input() -> void:
 
 	if direction != 0:
 		velocity.x = direction * SPEED
+		update_facing_direction(velocity.x)
 		if is_on_floor():
 			set_state(State.RUN)
 	else:

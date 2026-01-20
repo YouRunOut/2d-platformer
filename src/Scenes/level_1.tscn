@@ -925,6 +925,11 @@ sources/0 = SubResource("TileSetAtlasSource_p1k6p")
 
 [node name="Level-1" type="Node2D"]
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_uqqq8")
+volume_db = -9.246
+autoplay = true
+
 [node name="Parallax2D" type="Parallax2D" parent="."]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Parallax2D"]
@@ -946,9 +951,7 @@ tile_set = SubResource("TileSet_vta6r")
 position = Vector2(11, -20)
 
 [node name="damageObj" parent="." instance=ExtResource("3_vta6r")]
-position = Vector2(113, 24)
+position = Vector2(113, 25)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_uqqq8")
-volume_db = -21.571
-autoplay = true
+[node name="damageObj2" parent="." instance=ExtResource("3_vta6r")]
+position = Vector2(373, 9)
