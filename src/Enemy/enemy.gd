@@ -51,7 +51,7 @@ func patrol() -> void:
 	velocity.x = patrol_dir * speed
 	update_facing_direction(patrol_dir)
 	set_state(State.RUN)
-	
+
 
 func has_ground_ahead(dir: int) -> bool:
 	return (dir < 0 and ground_check_left.is_colliding())or (dir > 0 and ground_check_right.is_colliding())
@@ -85,7 +85,6 @@ func attack(target_body: Node2D) -> void:
 
 func try_attack() -> void:
 	velocity.x = 0
-	#set_state(State.IDLE)
 	
 	if can_attack:
 		attack(target)
@@ -101,7 +100,6 @@ func _on_body_lost(body: Node2D) -> void:
 
 func _on_attack_zone_entered(body: Node2D) -> void:
 	if body == target:
-		#attack(body)
 		target_in_attack_range = true
 
 func _on_attack_zone_exited(body: Node2D) -> void:

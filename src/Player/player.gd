@@ -66,11 +66,9 @@ func update_kill_ui(value: int) -> void:
 
 
 func _on_stomp_hit(body: Node) -> void:
-	# игрок должен быть в прыжке
 	if state != State.JUMP:
 		return
 	
-	# цель должна быть живой сущностью
 	if body is not Entity:
 		return
 	
@@ -89,7 +87,6 @@ func _on_stomp_hit(body: Node) -> void:
 	stomp_area.monitoring = true
 
 
-
 func check_fall_death() -> void:
 	if position.y >= FALL_KILL_Y:
 		hp = 0
@@ -97,6 +94,9 @@ func check_fall_death() -> void:
 func _on_animation_finished() -> void:
 	if state == State.DEAD:
 		await get_tree().create_timer(0.3).timeout
+		# временное решение
+		PlayerParameters.player_coins = 0
+		PlayerParameters.player_kills = 0
 		get_tree().reload_current_scene()
 	else:
 		super()

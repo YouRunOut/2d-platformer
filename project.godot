@@ -19,11 +19,19 @@ config/icon="res://icon.svg"
 
 PlayerParameters="*res://src/player_parameters.gd"
 
+[display]
+
+window/size/mode=3
+
 [global_group]
 
 entity=""
 player=""
 enemy=""
+
+[gui]
+
+theme/custom_font="uid://bhaaseyhntt8y"
 
 [rendering]
 
