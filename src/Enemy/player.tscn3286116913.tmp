@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b0myv7oh1tquk"]
+[gd_scene load_steps=38 format=3 uid="uid://b0myv7oh1tquk"]
 
 [ext_resource type="Script" uid="uid://b4rmhb1i5vnyh" path="res://src/Player/player.gd" id="1_fdvkn"]
 [ext_resource type="Texture2D" uid="uid://dns0or3khetye" path="res://public/characters/sprites/knight.png" id="2_chuli"]
@@ -271,20 +271,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ghl5d"]
 size = Vector2(13, 17)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdvkn"]
-size = Vector2(11, 1)
-
-[node name="CharacterBody2D" type="CharacterBody2D" groups=["entity", "player"]]
-collision_mask = 6
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["entity"]]
 script = ExtResource("1_fdvkn")
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
-volume_db = -9.674
-max_distance = 100.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(0.03227492, 0.029339625)
-zoom = Vector2(4.5, 4.5)
+zoom = Vector2(5, 5)
 
 [node name="HPLabel" type="Label" parent="Camera2D"]
 offset_left = -712.62756
@@ -292,23 +286,8 @@ offset_top = -647.5884
 offset_right = -598.87976
 offset_bottom = -624.5884
 scale = Vector2(12.529958, 12.529958)
+text = "GAME OVER"
 horizontal_alignment = 1
-
-[node name="CoinLabel" type="Label" parent="Camera2D"]
-offset_left = -3470.1865
-offset_top = -2079.0996
-offset_right = -3356.4387
-offset_bottom = -2056.0996
-scale = Vector2(12.529958, 12.529958)
-text = "Coin: "
-
-[node name="KillLabel" type="Label" parent="Camera2D"]
-offset_left = -3470.1865
-offset_top = -1738.2637
-offset_right = -3356.4387
-offset_bottom = -1715.2637
-scale = Vector2(12.529958, 12.529958)
-text = "Kill: "
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.9375, 0.9375)
@@ -318,17 +297,8 @@ autoplay = "idle"
 frame = 3
 frame_progress = 1.0
 
-[node name="HurtCollision" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.5)
 shape = SubResource("RectangleShape2D_ghl5d")
 
-[node name="StompArea" type="Area2D" parent="."]
-position = Vector2(0, 12)
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
-shape = SubResource("RectangleShape2D_fdvkn")
-
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
-[connection signal="body_entered" from="StompArea" to="." method="_on_stomp_hit"]

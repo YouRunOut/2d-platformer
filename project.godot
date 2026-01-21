@@ -15,9 +15,15 @@ run/main_scene="uid://b8c4dikvwk43j"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PlayerParameters="*res://src/player_parameters.gd"
+
 [global_group]
 
 entity=""
+player=""
+enemy=""
 
 [rendering]
 
