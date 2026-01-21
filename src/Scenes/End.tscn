@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://d3hbv6qb2ihrk"]
+[gd_scene load_steps=8 format=4 uid="uid://d3hbv6qb2ihrk"]
 
-[ext_resource type="AudioStream" uid="uid://bx62w3w61dab3" path="res://public/music/time_for_adventure.mp3" id="1_g5rvu"]
+[ext_resource type="AudioStream" uid="uid://3v2g8jl5qky3" path="res://public/characters/sounds/power_up.wav" id="1_g5rvu"]
 [ext_resource type="Texture2D" uid="uid://c3cvwj1op1kkx" path="res://public/tilemap/mainlev_build.png" id="2_vle4p"]
 [ext_resource type="PackedScene" uid="uid://b0myv7oh1tquk" path="res://src/Player/player.tscn" id="3_ipal3"]
 [ext_resource type="PackedScene" uid="uid://dnvspacumuaij" path="res://src/Coin/coin.tscn" id="4_27n0r"]
@@ -979,6 +979,23 @@ physics_layer_0/collision_layer = 7
 physics_layer_0/collision_mask = 7
 sources/0 = SubResource("TileSetAtlasSource_fkdmr")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g5rvu"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(17, 10, 1)
+emission_shape = 3
+emission_box_extents = Vector3(8, 1, 1)
+angle_min = -555.3
+angle_max = 174.30002
+inherit_velocity_ratio = 0.21
+velocity_pivot = Vector3(0, 20, 0)
+gravity = Vector3(0, 50, 0)
+linear_accel_min = -13.450002
+linear_accel_max = 26.009996
+radial_accel_min = -21.530003
+radial_accel_max = 16.139997
+hue_variation_min = -1.0
+hue_variation_max = 0.99999994
+
 [node name="End" type="Node2D"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -992,7 +1009,17 @@ tile_map_data = PackedByteArray("AAD9//v/AAA0ACAAAAD9//z/AAA0ACEAAAD9//3/AAA0ACI
 tile_set = SubResource("TileSet_d3bw2")
 
 [node name="Player" parent="." instance=ExtResource("3_ipal3")]
-position = Vector2(5, -68)
+position = Vector2(5, -44)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+position = Vector2(-4, -70)
+amount = 100
+lifetime = 8.0
+speed_scale = 2.0
+explosiveness = 1.0
+fixed_fps = 12
+visibility_rect = Rect2(0, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_g5rvu")
 
 [node name="Coin" parent="." instance=ExtResource("4_27n0r")]
 position = Vector2(-58, -20)
@@ -1015,3 +1042,14 @@ offset_top = -56.0
 offset_right = 65.0
 offset_bottom = -40.0
 text = "Well Done"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -46.0
+offset_top = 9.0
+offset_right = 176.0
+offset_bottom = 82.0
+scale = Vector2(0.4525913, 0.4525913)
+text = "Press
+
+[ ESC ] to Exit"
+horizontal_alignment = 1

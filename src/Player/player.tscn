@@ -287,10 +287,10 @@ scale = Vector2(0.03227492, 0.029339625)
 zoom = Vector2(4.5, 4.5)
 
 [node name="HPLabel" type="Label" parent="Camera2D"]
-offset_left = -712.62756
-offset_top = -647.5884
-offset_right = -598.87976
-offset_bottom = -624.5884
+offset_left = -1394.2715
+offset_top = -477.1704
+offset_right = -1171.7214
+offset_bottom = -454.1704
 scale = Vector2(12.529958, 12.529958)
 horizontal_alignment = 1
 

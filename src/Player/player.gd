@@ -18,6 +18,8 @@ func _ready() -> void:
 	hp_changed.connect(func(v): update_hp_ui(v))
 	PlayerParameters.coins_changed.connect(func(v): update_coin_ui(v))
 	PlayerParameters.kills_changed.connect(func(v): update_kill_ui(v))
+	update_coin_ui(PlayerParameters.player_coins)
+	update_kill_ui(PlayerParameters.player_kills)
 	super()
 
 
@@ -88,15 +90,14 @@ func _on_stomp_hit(body: Node) -> void:
 
 
 func check_fall_death() -> void:
+	if state == State.DEAD: return
 	if position.y >= FALL_KILL_Y:
 		hp = 0
 
 func _on_animation_finished() -> void:
 	if state == State.DEAD:
-		await get_tree().create_timer(0.3).timeout
-		# временное решение
-		PlayerParameters.player_coins = 0
-		PlayerParameters.player_kills = 0
-		get_tree().reload_current_scene()
+		hp_label.text = "GAME OVER"
+		await get_tree().create_timer(1).timeout
+		hp_label.text = "Press R to Restart"
 	else:
 		super()

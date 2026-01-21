@@ -18,5 +18,9 @@ signal coins_changed(current_coins : int)
 signal kills_changed(current_kills : int)
 
 func _input(event):
+	if event.is_action_pressed("Restart"):
+		PlayerParameters.player_coins = 0
+		PlayerParameters.player_kills = 0
+		get_tree().reload_current_scene()
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
