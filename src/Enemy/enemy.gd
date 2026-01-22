@@ -37,9 +37,8 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-# --------------------
-# AI BEHAVIOR
-# --------------------
+#region AI BEHAVIOR
+
 
 func patrol() -> void:
 	var dir := patrol_dir
@@ -77,11 +76,10 @@ func attack(target_body: Node2D) -> void:
 	
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
+#endregion
 
+#region DETECTION / ATTACK
 
-# --------------------
-# DETECTION / ATTACK
-# --------------------
 
 func try_attack() -> void:
 	velocity.x = 0
@@ -105,6 +103,7 @@ func _on_attack_zone_entered(body: Node2D) -> void:
 func _on_attack_zone_exited(body: Node2D) -> void:
 	if body == target:
 		target_in_attack_range = false
+#endregion
 
 func _on_animation_finished() -> void:
 	if state == State.DEAD:
